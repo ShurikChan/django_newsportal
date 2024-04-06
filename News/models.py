@@ -36,7 +36,7 @@ class Post(models.Model):
                                  choices = PUBLICATIONS,
                                  default = 'publication')
     time_in = models.DateTimeField(auto_now_add = True)
-    category = models.ManyToManyField(Category, through = 'PostCategory')
+    category = models.ManyToManyField(Category, through = 'PostCategory', related_name='posts')
     heading = models.CharField(max_length = 100)
     text = models.CharField(max_length = 255)
     like_rating = models.IntegerField(default = 0)
