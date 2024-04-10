@@ -7,6 +7,8 @@ class Author(models.Model):
     user = models.OneToOneField(User, on_delete = models.CASCADE)
     rating = models.IntegerField(default = 0)
 
+    def __str__(self):
+        return f'{self.user}' 
 
     def update_rating(self):
         posts_rating = 0
