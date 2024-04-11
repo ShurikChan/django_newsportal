@@ -9,6 +9,5 @@ class PostFilter(FilterSet):
        model = Post
        fields = {
            'heading': ['icontains'],
-           'author' : ['exact'],
-           
+           'author__user__username' : ['icontains'],
        }

@@ -1,10 +1,15 @@
 {% extends 'flatpages/default.html' %}
 
+{% load custom_filters %}
 {% load custom_tags %}
 
 {% block content %}
-   <h1>Все новости: {{ post|length }} </h1>
+   <h1>Поиск:  </h1>
    <hr>
+   <form action="" method="get">
+    {{ filterset.form.as_p }}
+    <input type="submit" value="Найти" />
+</form>
    {% if post %}
        <table>
            <tr>

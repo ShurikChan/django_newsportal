@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from News.config import PUBLICATIONS
+from django.urls import reverse
 
 
 class Author(models.Model):
@@ -43,6 +44,9 @@ class Post(models.Model):
     text = models.CharField(max_length = 255)
     like_rating = models.IntegerField(default = 0)
     dislike_rating = models.IntegerField(default = 0)
+
+    def get_absolute_url(self):
+        return reverse('post_main')
 
 # p1.set(category = 'Sports')
     def like(self):
