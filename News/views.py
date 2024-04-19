@@ -4,7 +4,7 @@ from .models import Post
 from .filters import PostFilter
 from .forms import NewsForm
 from django.urls import reverse_lazy
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 
 class PostList(ListView):
@@ -51,19 +51,22 @@ class PostSearch(ListView):
         context['filterset'] = self.filterset
         return context
     
-class NewsCreate(CreateView, LoginRequiredMixin, TemplateView):
+class NewsCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+    permission_required = ('News.add_post', )
     form_class = NewsForm
     model = Post
     template_name = 'news_edit.html'
 
 
-class NewsUpdate(UpdateView, LoginRequiredMixin, TemplateView):
+class NewsUpdate(LoginRequiredMixin ,PermissionRequiredMixin, UpdateView):
+    permission_required = ('News.change_post', )
     form_class = NewsForm
     model = Post
     template_name = 'news_edit.html'
 
 
-class ProductDelete(DeleteView):
+class ProductDelete(PermissionRequiredMixin, DeleteView):
+    permission_required = ('News.delete_post', )
     model = Post
     template_name = 'news_delete.html'
     success_url = reverse_lazy('post_main')
