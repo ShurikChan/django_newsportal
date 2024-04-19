@@ -1,9 +1,10 @@
 from datetime import datetime
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
 from .models import Post
 from .filters import PostFilter
 from .forms import NewsForm
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 class PostList(ListView):
@@ -50,13 +51,13 @@ class PostSearch(ListView):
         context['filterset'] = self.filterset
         return context
     
-class NewsCreate(CreateView):
+class NewsCreate(CreateView, LoginRequiredMixin, TemplateView):
     form_class = NewsForm
     model = Post
     template_name = 'news_edit.html'
 
 
-class NewsUpdate(UpdateView):
+class NewsUpdate(UpdateView, LoginRequiredMixin, TemplateView):
     form_class = NewsForm
     model = Post
     template_name = 'news_edit.html'
