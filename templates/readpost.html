@@ -1,6 +1,13 @@
 {% extends 'flatpages/default.html' %}
 
+{% if not follow_status %}
+    <form action="{% url 'news_follow' %}" method="post">
+    {% csrf_token %}
+    <input type="submit"> value="Подписаться на категорию"></input> 
+    </form>
+{% endif %}
 {% block content %}
+<h5>Категория: {{ postd.category }}</h5>
 <h1>Заголовок: {{ postd.heading }}</h1>
 <h1>Автор: {{  postd.author.user }}</h1>
 <h1>Дата публикации: {{ postd.time_in }}</h1>
