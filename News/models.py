@@ -33,6 +33,9 @@ class Category(models.Model):
     name = models.CharField(unique = True,max_length = 50)
     subscribers = models.ManyToManyField(User, through = 'CategorySubs', related_name='subs')
 
+    def __str__(self):
+        return f'{self.name}' 
+
 
 class Post(models.Model):
     author = models.ForeignKey(Author, on_delete = models.CASCADE)
@@ -46,8 +49,11 @@ class Post(models.Model):
     like_rating = models.IntegerField(default = 0)
     dislike_rating = models.IntegerField(default = 0)
 
+
+        
     def get_absolute_url(self):
         return reverse('post_main')
+    
 
 # p1.set(category = 'Sports')
     def like(self):

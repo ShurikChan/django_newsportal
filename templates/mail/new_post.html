@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Уведомление</title>
+</head>
+<body>
+    <h2> Здравствуй, {{ username }}
+        ! Новая статья в вашем любимом разделе!</h2>
+        <p><h1>{{post.heading}}</h1>
+
+            <h3>{{ post.text|truncatechars:50 }}</h3>
+        </p>
+</body>
+</html>

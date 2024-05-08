@@ -1,10 +1,12 @@
 from datetime import datetime
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
-from .models import Post
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from .models import Post, Category, CategorySubs
 from .filters import PostFilter
 from .forms import NewsForm
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.shortcuts import redirect
+from django.contrib.auth.decorators import login_required
 
 
 class PostList(ListView):
@@ -57,6 +59,13 @@ class NewsCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Post
     template_name = 'news_edit.html'
 
+    def form_valid(self, form):
+        post = form.save(commit=False)
+        post.user = self.request.user
+        post.save()
+        return super().form_valid(form)
+
+
 
 class NewsUpdate(LoginRequiredMixin ,PermissionRequiredMixin, UpdateView):
     permission_required = ('News.change_post', )
@@ -65,8 +74,29 @@ class NewsUpdate(LoginRequiredMixin ,PermissionRequiredMixin, UpdateView):
     template_name = 'news_edit.html'
 
 
-class ProductDelete(PermissionRequiredMixin, DeleteView):
+class NewsDelete(PermissionRequiredMixin, DeleteView):
     permission_required = ('News.delete_post', )
     model = Post
     template_name = 'news_delete.html'
     success_url = reverse_lazy('post_main')
+
+
+@login_required
+def subscribe(request, pk):
+    category = Category.objects.get(pk=pk)
+    user = request.user
+    category.subscribers.add(user)
+    return redirect(request.META.get('HTTP_REFERER'))
+
+
+
+@login_required
+def unsubscribe(request, pk):
+    category = Category.objects.get(pk=pk)
+    user = request.user
+    category.subscribers.add(user)
+    return redirect(request.META.get('HTTP_REFERER'))
+
+
+
+

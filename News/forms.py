@@ -6,7 +6,8 @@ class NewsForm(forms.ModelForm):
    class Meta:
        model = Post
        fields = {
-           'author': ['exact'],
+           'author':['exact'],
            'heading':[''],
            'text':[''],
+           'category':['exact'],
        }
