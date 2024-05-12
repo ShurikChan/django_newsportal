@@ -52,7 +52,7 @@ class Post(models.Model):
 
         
     def get_absolute_url(self):
-        return reverse('post_main')
+        return f'/post/{self.id}'
     
 
 # p1.set(category = 'Sports')

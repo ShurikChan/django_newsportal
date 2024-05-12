@@ -1,12 +1,15 @@
 from datetime import datetime
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from .models import Post, Category, CategorySubs
+from .models import Post, Category, CategorySubs, Author
 from .filters import PostFilter
 from .forms import NewsForm
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from .tasks.basic import send_welcome_email
+
 
 
 class PostList(ListView):
@@ -23,9 +26,9 @@ class PostList(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['time_now'] = datetime.utcnow()
         context['next_post'] = "Пока нет новостей!"
         context['filterset'] = self.filterset
+        context['allposts'] = Post.objects.all()
         return context
 
 class PostDetail(DetailView):
@@ -48,7 +51,6 @@ class PostSearch(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['time_now'] = datetime.utcnow()
         context['next_post'] = "Пока нет новостей!"
         context['filterset'] = self.filterset
         return context
@@ -59,12 +61,17 @@ class NewsCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Post
     template_name = 'news_edit.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['author'] = Author.objects.get(user=self.request.user)
+        return context
+    
     def form_valid(self, form):
         post = form.save(commit=False)
-        post.user = self.request.user
+        post.author = Author.objects.get(user=self.request.user)
         post.save()
         return super().form_valid(form)
-
+    
 
 
 class NewsUpdate(LoginRequiredMixin ,PermissionRequiredMixin, UpdateView):
@@ -96,6 +103,8 @@ def unsubscribe(request, pk):
     user = request.user
     category.subscribers.add(user)
     return redirect(request.META.get('HTTP_REFERER'))
+
+
 
 
 

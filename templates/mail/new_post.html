@@ -7,8 +7,8 @@
 <body>
     <h2> Здравствуй, {{ username }}
         ! Новая статья в вашем любимом разделе!</h2>
-        <p><h1>{{post.heading}}</h1>
-
+        <p>
+            <a href="{{ link }}">{{ post.heading }}</a>
             <h3>{{ post.text|truncatechars:50 }}</h3>
         </p>
 </body>
