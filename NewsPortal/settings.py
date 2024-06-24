@@ -202,6 +202,7 @@ CACHES = {
 }
 
 
+
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
@@ -227,12 +228,11 @@ LOGGING = {
     },
 
     "filters": {
-        "special": {
-            "()": "project.logging.SpecialFilter",
-            "foo": "bar",
-        },
         "require_debug_true": {
             "()": "django.utils.log.RequireDebugTrue",
+        },
+        "require_debug_false": {
+            "()": "django.utils.log.RequireDebugFalse",
         },
     },
     "handlers": {
@@ -261,7 +261,7 @@ LOGGING = {
             "level": "INFO",
             "filters": ["require_debug_false"],
             "class": "logging.FileHandler",
-            "filename": "/path/to/django/general.log",
+            "filename": "general.log",
             "formatter": "filing",
         },
 
@@ -269,7 +269,7 @@ LOGGING = {
             "level": "ERROR",
             "filters": ["require_debug_false"],
             "class": "logging.FileHandler",
-            "filename": "/path/to/django/errors.log",
+            "filename": "errors.log",
             "formatter": "extra",
         },
         
@@ -277,7 +277,7 @@ LOGGING = {
             "level": "WARNING",
             "filters": ["require_debug_false"],
             "class": "logging.FileHandler",
-            "filename": "/path/to/django/security.log",
+            "filename": "security.log",
             "formatter": "filing",
         },
 
@@ -308,7 +308,6 @@ LOGGING = {
         "django.server": {
             "handlers": ["file_security", "file_error", "mail_admins"],
             "propagate": True,
-            "filters": ["special"],
         },
         "django.template": {
             "handlers": ["file_error"],
