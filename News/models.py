@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from News.config import PUBLICATIONS
 from django.urls import reverse
+from django.core.cache import cache
 
 
 class Author(models.Model):
@@ -71,6 +72,11 @@ class Post(models.Model):
                 return self.text
             else:
                 return self.text[:125] + '...'
+            
+    
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        cache.delete(f'product-{self.pk}')
 
 
 class PostCategory(models.Model):
