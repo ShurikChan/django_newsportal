@@ -1,22 +1,23 @@
 {% extends 'flatpages/default.html' %}
+{% load i18n %}
 
 {% load custom_filters %}
 {% load custom_tags %}
 
 {% block content %}
-   <h1>Поиск:  </h1>
+   <h1>{% trans "Дата" %}:  </h1>
    <hr>
    <form action="" method="get">
     {{ filterset.form.as_p }}
-    <input type="submit" value="Найти" />
+    <input type="submit" value='{% trans "Найти" %}' />
 </form>
    {% if post %}
        <table>
            <tr>
-               <td>Дата</td>
-               <td>Автор</td>
-               <td>Заголовок</td>
-               <td>Новость</td>
+               <td>{% trans "Дата" %}</td>
+               <td>{% trans "Автор" %}</td>
+               <td>{% trans "Заголовок" %}</td>
+               <td>{% trans "Новость" %}</td>
 
            </tr>
 

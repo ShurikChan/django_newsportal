@@ -1,17 +1,17 @@
 {% extends 'flatpages/default.html' %}
-
+{% load i18n %}
 {% load custom_tags %}
 
 {% block content %}
-   <h1>Все новости: {{ allposts|length }} </h1>
+   <h1>{% trans "Все новости" %}: {{ allposts|length }} </h1>
    <hr>
    {% if post %}
        <table>
            <tr>
-               <td>Дата</td>
-               <td>Автор</td>
-               <td>Заголовок</td>
-               <td>Новость</td>
+               <td>{% trans "Дата" %}</td>
+               <td>{% trans "Автор" %}</td>
+               <td>{% trans "Заголовок" %}</td>
+               <td>{% trans "Новость" %}</td>
 
            </tr>
 

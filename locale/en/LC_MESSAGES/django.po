@@ -1,0 +1,91 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-06-29 18:02+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: News/views.py:30 News/views.py:64
+msgid "Пока нет новостей!"
+msgstr "There is no news"
+
+#: templates/news_delete.html:5
+msgid "Удаление публикации"
+msgstr "Delete posts"
+
+#: templates/news_delete.html:9
+msgid "Удаляем"
+msgstr "Delete"
+
+#: templates/news_edit.html:5
+msgid "Создайте новость"
+msgstr "Create a post"
+
+#: templates/post.html:6
+msgid "Все новости"
+msgstr "All news"
+
+#: templates/post.html:11 templates/search.html:8 templates/search.html:17
+msgid "Дата"
+msgstr "Date"
+
+#: templates/post.html:12 templates/readpost.html:15 templates/search.html:18
+msgid "Автор"
+msgstr "Author"
+
+#: templates/post.html:13 templates/readpost.html:14 templates/search.html:19
+msgid "Заголовок"
+msgstr "Tittle"
+
+#: templates/post.html:14 templates/readpost.html:17 templates/search.html:20
+msgid "Новость"
+msgstr "Post"
+
+#: templates/protect/index.html:5
+msgid "Страница авторизованного пользователя"
+msgstr "Authorizated user's page of "
+
+#: templates/protect/index.html:6
+msgid "Здесь может содержаться персональная информация для каждого пользователя"
+msgstr "Here you can find some porsonal information"
+
+#: templates/protect/index.html:8
+msgid "Выйти"
+msgstr "Logout"
+
+#: templates/protect/index.html:10
+msgid "Стать автором"
+msgstr "Become an author"
+
+#: templates/readpost.html:9
+msgid "Подписаться"
+msgstr "Subscribe"
+
+#: templates/readpost.html:11
+msgid "Отписаться"
+msgstr "Unsubscribe"
+
+#: templates/readpost.html:16
+msgid "Дата публикации"
+msgstr "Publish date"
+
+#: templates/search.html:12
+msgid "Найти"
+msgstr "Find"
+
+#: templates/sign/logout.html:4
+msgid "Вы вышли из системы"
+msgstr "You have logged out"

@@ -1,17 +1,18 @@
 {% extends 'flatpages/default.html' %}
+{% load i18n %}
 
 
 {% block content %}
 {% for cat in postd.category.all %}
     <u>{{ cat.name }}</u>
         {% if request.user in cat.subscribers.all %}
-        <a class="btn btn-secondary" href="{% url 'unsubscribe' cat.id %}">Отписаться</a>
+        <a class="btn btn-secondary" href="{% url 'unsubscribe' cat.id %}">{% trans "Отписаться" %}</a>
         {% else %}
-        <a class="btn btn-secondary" href="{% url 'subscribe' cat.id %}">Подписаться</a>
+        <a class="btn btn-secondary" href="{% url 'subscribe' cat.id %}">{% trans "Подписаться" %}</a>
         {% endif %}
         {% endfor %}
-<h1>Заголовок: {{ postd.heading }}</h1>
-<h1>Автор: {{  postd.author.user }}</h1>
-<h1>Дата публикации: {{ postd.time_in }}</h1>
-<h1>Новость: {{ postd.text }}</h1>
+<h1>{% trans "Заголовок" %}: {{ postd.heading }}</h1>
+<h1>{% trans "Автор" %}: {{  postd.author.user }}</h1>
+<h1>{% trans "Дата публикации" %}: {{ postd.time_in }}</h1>
+<h1>{% trans "Подписаться" %}: {{ postd.text }}</h1>
 {% endblock content %}

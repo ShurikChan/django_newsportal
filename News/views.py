@@ -1,5 +1,5 @@
 from datetime import datetime
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, View
 from .models import Post, Category, CategorySubs, Author
 from .filters import PostFilter
 from .forms import NewsForm
@@ -9,6 +9,7 @@ from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.cache import cache
+from django.utils.translation import gettext as gettext
 
 
 
@@ -26,7 +27,7 @@ class PostList(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['next_post'] = "Пока нет новостей!"
+        context['next_post'] = gettext("Пока нет новостей!")
         context['filterset'] = self.filterset
         context['allposts'] = Post.objects.all()
         return context
@@ -60,7 +61,7 @@ class PostSearch(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['next_post'] = "Пока нет новостей!"
+        context['next_post'] = gettext("Пока нет новостей!")
         context['filterset'] = self.filterset
         return context
     
@@ -110,11 +111,5 @@ def subscribe(request, pk):
 def unsubscribe(request, pk):
     category = Category.objects.get(pk=pk)
     user = request.user
-    category.subscribers.add(user)
+    category.subscribers.remove(user)
     return redirect(request.META.get('HTTP_REFERER'))
-
-
-
-
-
-
