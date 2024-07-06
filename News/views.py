@@ -1,16 +1,13 @@
-from datetime import datetime
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, View
-from .models import Post, Category, CategorySubs, Author
+from .models import Post, Category, Author
 from .filters import PostFilter
 from .forms import NewsForm
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
 from django.core.cache import cache
 from django.utils.translation import gettext as gettext
-
 
 
 class PostList(ListView):
@@ -24,7 +21,6 @@ class PostList(ListView):
         self.filterset = PostFilter(self.request.GET, queryset)
         return self.filterset.qs
 
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['next_post'] = gettext("Пока нет новостей!")
@@ -32,12 +28,12 @@ class PostList(ListView):
         context['allposts'] = Post.objects.all()
         return context
 
+
 class PostDetail(DetailView):
     model = Post
     template_name = 'readpost.html'
     context_object_name = 'postd'
     queryset = Post.objects.all()
-
 
     def get_object(self, *args, **kwargs):
         obj = cache.get(f'post-{self.kwargs["pk"]}', None)
@@ -58,13 +54,13 @@ class PostSearch(ListView):
         self.filterset = PostFilter(self.request.GET, queryset)
         return self.filterset.qs
 
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['next_post'] = gettext("Пока нет новостей!")
         context['filterset'] = self.filterset
         return context
-    
+
+
 class NewsCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     permission_required = ('News.add_post', )
     form_class = NewsForm
@@ -75,16 +71,15 @@ class NewsCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
         context = super().get_context_data(**kwargs)
         context['author'] = Author.objects.get(user=self.request.user)
         return context
-    
+
     def form_valid(self, form):
         post = form.save(commit=False)
         post.author = Author.objects.get(user=self.request.user)
         post.save()
         return super().form_valid(form)
-    
 
 
-class NewsUpdate(LoginRequiredMixin ,PermissionRequiredMixin, UpdateView):
+class NewsUpdate(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     permission_required = ('News.change_post', )
     form_class = NewsForm
     model = Post
@@ -104,7 +99,6 @@ def subscribe(request, pk):
     user = request.user
     category.subscribers.add(user)
     return redirect(request.META.get('HTTP_REFERER'))
-
 
 
 @login_required
